@@ -1,13 +1,22 @@
 <template>
   <div>
-    <section>LOGO</section>
-    <input />
-    <input />
+    <slot />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    elevation: {
+      type: Number,
+      default: 1
+    },
+    withHover: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
 </script>
 
 <style></style>
