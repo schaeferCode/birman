@@ -1,6 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+import authenticated from "../middleware/authenticated";
+
+import Home from "../views/Home";
 
 Vue.use(VueRouter);
 
@@ -8,16 +11,18 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home, // load sync home
+    default: true
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/login",
+    name: "Login",
+    meta: { layout: "login-layout" },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "about" */ "../views/Login.vue")
   }
 ];
 
@@ -26,5 +31,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeEach(authenticated);
 
 export default router;

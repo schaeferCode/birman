@@ -1,5 +1,7 @@
 <template>
-  <div>Home</div>
+  <div>
+    <login-card />
+  </div>
 </template>
 
 <script>

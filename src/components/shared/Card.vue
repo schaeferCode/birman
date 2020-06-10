@@ -1,5 +1,9 @@
 <template>
-  <div>Home</div>
+  <div>
+    <section>LOGO</section>
+    <input />
+    <input />
+  </div>
 </template>
 
 <script>

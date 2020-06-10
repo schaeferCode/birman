@@ -1,5 +1,8 @@
 <template>
-  <div>Home</div>
+  <div>
+    LOGIN PAGE
+    <slot />
+  </div>
 </template>
 
 <script>
