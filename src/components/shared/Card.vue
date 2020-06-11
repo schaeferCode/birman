@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    class="shadow-md w-64 h-64 border border-solid border-gray-100"
+    :class="getSize"
+  >
     <slot />
   </div>
 </template>
@@ -7,16 +10,24 @@
 <script>
 export default {
   props: {
-    elevation: {
-      type: Number,
-      default: 1
-    },
-    withHover: {
-      type: Boolean,
-      default: false
+    size: {
+      type: String,
+      default: "medium"
+    }
+  },
+
+  computed: {
+    getSize() {
+      return "";
+      // switch (this.size) {
+      //   case 'small':
+      //     return { 'h-64'}
+      //     break;
+
+      //   default:
+      //     break;
+      // }
     }
   }
 };
 </script>
-
-<style></style>

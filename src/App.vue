@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import "@/assets/main.css";
+
 export default {
   computed: {
     layout() {
@@ -15,5 +17,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

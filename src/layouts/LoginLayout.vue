@@ -1,12 +1,15 @@
 <template>
-  <div>
-    LOGIN PAGE
-    <slot />
-  </div>
+  <card class="flex">
+    stuff
+  </card>
 </template>
 
 <script>
-export default {};
-</script>
+import Card from "@/components/shared/Card";
 
-<style></style>
+export default {
+  components: {
+    Card
+  }
+};
+</script>
