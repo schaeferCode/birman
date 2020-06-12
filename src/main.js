@@ -3,9 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import "./assets/main.css";
+
 import DefaultLayout from "./layouts/DefaultLayout";
 import LoginLayout from "./layouts/LoginLayout";
-import "./assets/main.css";
 
 Vue.component("default-layout", DefaultLayout);
 Vue.component("login-layout", LoginLayout);

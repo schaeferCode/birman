@@ -1,8 +1,9 @@
-// import AuthServices from '../services/AuthServices';
-// import isAuthenticated from store
+import store from "@/store";
 
 export default (to, from, next) => {
-  const isAuthenticated = false;
-  if (to.name !== "Login" && !isAuthenticated) next({ name: "Login" });
-  else next();
+  const isAuthenticated = store.getters["auth/isAuthenticated"];
+  const isPublicRoute = to.meta.publicRoute;
+
+  if (isAuthenticated || isPublicRoute) return next();
+  next("/login");
 };

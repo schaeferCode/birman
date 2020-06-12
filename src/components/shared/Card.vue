@@ -1,16 +1,5 @@
 <template>
-  <div class="shadow-md border border-solid border-gray-100" :class="getSize">
+  <div class="max-w-sm w-full overflow-hidden shadow-lg">
     <slot />
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    size: {
-      type: String,
-      default: "medium"
-    }
-  }
-};
-</script>

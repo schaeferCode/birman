@@ -1,7 +1,9 @@
 <template>
-  <card class="flex">
-    stuff
-  </card>
+  <div class="w-screen h-screen flex flex-col justify-center items-center">
+    <card class="flex">
+      <slot />
+    </card>
+  </div>
 </template>
 
 <script>
