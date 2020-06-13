@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header />
-    HEADER PAGE
     <slot />
   </div>
 </template>
@@ -15,5 +14,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

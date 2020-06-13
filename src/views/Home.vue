@@ -1,9 +1,18 @@
 <template>
-  <div>Home</div>
+  <div>
+    <div class="flex justify-around">
+      <campaign-card company="google" :campaigns="5" @click="$router.push('/google')" />
+      <campaign-card company="facebook" :campaigns="4" @click="$router.push('/facebook')" />
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import CampaignCard from '@/components/shared/CampaignCard'
 
-<style></style>
+export default {
+  components: {
+    CampaignCard
+  },
+};
+</script>
