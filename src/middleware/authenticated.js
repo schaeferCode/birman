@@ -1,7 +1,7 @@
-import store from "@/store";
+// import store from "@/store";
 
 export default (to, from, next) => {
-  next()
+  next();
   // const isAuthenticated = store.getters["auth/isAuthenticated"];
   // const isPublicRoute = to.meta.publicRoute;
 
