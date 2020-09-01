@@ -1,11 +1,11 @@
 <template>
   <form class="px-8 pt-6 pb-8 w-full" @submit.prevent="handleLogin">
     <label class="block mb-4 text-gray-700 text-sm font-bold">
-      <p class="mb-2">Username</p>
+      <p class="mb-2">Email</p>
       <input
-        v-model="username"
+        v-model="email"
         class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="Username"
+        placeholder="email"
         type="text"
       />
     </label>
@@ -29,8 +29,9 @@
       <router-link
         to="/login/forgot-password"
         class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-        >Forgot Password?</router-link
       >
+        Forgot Password?
+      </router-link>
     </div>
   </form>
 </template>
@@ -39,20 +40,22 @@
 export default {
   data() {
     return {
-      password: "",
-      username: ""
+      email: '',
+      password: ''
     };
   },
 
   methods: {
     async handleLogin() {
-      console.log(`user: ${this.username}`);
-      console.log(`pass: ${this.password}`);
-      await this.$store.dispatch("auth/login", {
-        username: this.username,
-        password: this.password
+      const { tenant } = this.$route.query;
+      await this.$store.dispatch('auth/login', {
+        email: this.email,
+        password: this.password,
+        tenant
       });
-      this.$router.push("/");
+      this.$router.push('/').catch(err => {
+        console.log({ err });
+      });
     }
   }
 };
