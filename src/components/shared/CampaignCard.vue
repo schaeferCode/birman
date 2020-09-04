@@ -1,8 +1,5 @@
 <template>
-  <card
-    class="flex h-64 items-center justify-center relative cursor-pointer"
-    @click="$emit('click')"
-  >
+  <card class="flex h-64 items-center justify-center relative cursor-pointer" @click="$emit('click')">
     <img class="h-20" :src="getImgPath" />
     <div class="absolute left-0 bottom-0 p-4">
       <span> Campaigns: {{ campaigns }} </span>
@@ -11,7 +8,7 @@
 </template>
 
 <script>
-import Card from "./Card";
+import Card from './Card';
 
 export default {
   components: {

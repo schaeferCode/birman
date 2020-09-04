@@ -34,6 +34,16 @@ const routes = [
       publicRoute: true
     },
     component: () => import('../views/ForgotPassword.vue')
+  },
+  {
+    path: '/ad-services/oauth/google',
+    redirect: () => {
+      window.location.href = 'http://localhost:3000/ad-services/oauth/google';
+    }
+  },
+  {
+    path: '/user-administration/add-users-batch',
+    component: () => import('../views/UserAdministration/AddUsersBatch.vue')
   }
 ];
 

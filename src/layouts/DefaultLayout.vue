@@ -1,16 +1,27 @@
 <template>
   <div>
     <Header />
-    <slot />
+    <div class="flex flex-row">
+      <SideNav />
+      <slot />
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import Header from '@/components/Header';
+import SideNav from '@/components/SideNav';
 
 export default {
   components: {
-    Header
+    Header,
+    SideNav
+  },
+
+  computed: {
+    ...mapState('Auth', ['user'])
   }
 };
 </script>

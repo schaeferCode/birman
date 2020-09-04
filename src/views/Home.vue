@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex-1">
     <div class="flex justify-around">
-      <campaign-card company="google" :campaigns="5" @click="handleGoogle" />
+      <campaign-card company="google" :campaigns="4" @click="linkGoogle" />
       <campaign-card company="facebook" :campaigns="4" @click="handleFacebook" />
     </div>
   </div>
@@ -9,12 +9,22 @@
 
 <script>
 import { getFacebook } from '@/services/facebook';
-import { getGoogle } from '@/services/google';
+// import { getGoogle } from '@/services/google';
 import CampaignCard from '@/components/shared/CampaignCard';
 
 export default {
   components: {
     CampaignCard
+    // GoogleLogin
+  },
+
+  data() {
+    return {
+      googleParams: {
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        scope: ['https://www.googleapis.com/auth/adwords', 'https://www.googleapis.com/auth/userinfo.email']
+      }
+    };
   },
 
   methods: {
@@ -23,9 +33,8 @@ export default {
       console.log('hererer');
     },
 
-    async handleGoogle() {
-      await getGoogle();
-      console.log('herere');
+    linkGoogle() {
+      this.$router.push('/ad-services/oauth/google');
     }
   }
 };

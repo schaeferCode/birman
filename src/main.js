@@ -1,15 +1,16 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import Vue from 'vue';
 
-import "./assets/main.css";
+import router from './router';
+import store from './store';
 
-import DefaultLayout from "./layouts/DefaultLayout";
-import LoginLayout from "./layouts/LoginLayout";
+import './assets/main.css';
 
-Vue.component("default-layout", DefaultLayout);
-Vue.component("login-layout", LoginLayout);
+import App from './App.vue';
+import DefaultLayout from './layouts/DefaultLayout';
+import LoginLayout from './layouts/LoginLayout';
+
+Vue.component('default-layout', DefaultLayout);
+Vue.component('login-layout', LoginLayout);
 
 Vue.config.productionTip = false;
 
@@ -17,4 +18,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app');

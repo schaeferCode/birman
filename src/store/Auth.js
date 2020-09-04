@@ -1,4 +1,4 @@
-import auth from '@/services/auth';
+import Auth from '@/services/auth';
 import jwtDecode from 'jwt-decode';
 
 export default {
@@ -43,7 +43,7 @@ export default {
   actions: {
     async login({ commit }, { email, password, tenant }) {
       try {
-        const response = await auth.login({ email, password, tenant });
+        const response = await Auth.login({ email, password, tenant });
         // decode token data and set to store
         const decodedToken = jwtDecode(response.data.token);
         commit('setUser', decodedToken.data);
