@@ -1,7 +1,7 @@
-import store from '@/store';
+import Auth from '@/services/auth';
 
 export default (to, from, next) => {
-  const isAuthenticated = store.getters['Auth/isAuthenticated'];
+  const isAuthenticated = Auth.verifyAndDecodeToken();
   const isPublicRoute = to.meta.publicRoute;
 
   if (isAuthenticated || isPublicRoute) next();

@@ -1,11 +1,9 @@
 import Auth from '@/services/auth';
-import jwtDecode from 'jwt-decode';
 
 export default {
   namespaced: true,
 
   state: () => ({
-    isAuthenticated: false,
     user: {
       email: '',
       givenName: '',
@@ -17,10 +15,6 @@ export default {
   }),
 
   getters: {
-    isAuthenticated: state => {
-      return state.isAuthenticated;
-    },
-
     isAdmin: state => {
       return state.user.role.includes(['admin', 'root']);
     },
@@ -31,10 +25,6 @@ export default {
   },
 
   mutations: {
-    setIsAuthenticated(state, isAuthenticated) {
-      state.isAuthenticated = isAuthenticated;
-    },
-
     setUser(state, userData) {
       state.user = userData;
     }
@@ -44,10 +34,19 @@ export default {
     async login({ commit }, { email, password, tenant }) {
       try {
         const response = await Auth.login({ email, password, tenant });
+        // set token to localStorage
+        Auth.setToken(response.data.token);
         // decode token data and set to store
-        const decodedToken = jwtDecode(response.data.token);
-        commit('setUser', decodedToken.data);
-        commit('setIsAuthenticated', true);
+        const decodedToken = Auth.verifyAndDecodeToken();
+        const userData = {
+          email: decodedToken.email,
+          givenName: decodedToken.givenName,
+          familyName: decodedToken.familyName,
+          linkedAdServices: decodedToken.linkedAdServices,
+          role: decodedToken.role,
+          tenant: tenant
+        };
+        commit('setUser', userData);
       } catch (error) {
         // TODO: handle error in store properly
         console.log({ error });
