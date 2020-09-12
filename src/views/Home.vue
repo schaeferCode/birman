@@ -9,7 +9,6 @@
 
 <script>
 import { getFacebook } from '@/services/facebook';
-// import { getGoogle } from '@/services/google';
 import CampaignCard from '@/components/shared/CampaignCard';
 
 export default {
@@ -33,7 +32,7 @@ export default {
       console.log('hererer');
     },
 
-    linkGoogle() {
+    async linkGoogle() {
       this.$router.push('/ad-services/oauth/google');
     }
   }

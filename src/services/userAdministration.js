@@ -7,7 +7,7 @@ const Axios = axios.create({
 });
 
 export default {
-  getGoogleSubAccounts: managerId => {
-    return Axios.post('/ad-services/get-sub-accounts', { managerId });
+  createUsersBatch: users => {
+    return Axios.post('/users/create-user-batch', { users });
   }
 };
