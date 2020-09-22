@@ -8,6 +8,6 @@ const Axios = axios.create({
 
 export default {
   createUsersBatch: users => {
-    return Axios.post('/users/create-user-batch', { users });
+    return Axios.post('/users/batch-user-creation', { users });
   }
 };

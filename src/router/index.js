@@ -24,7 +24,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login')
   },
   {
     path: '/login/forgot-password',
@@ -33,7 +33,7 @@ const routes = [
       layout: 'login-layout',
       publicRoute: true
     },
-    component: () => import('../views/ForgotPassword.vue')
+    component: () => import('../views/ForgotPassword')
   },
   {
     path: '/ad-services/oauth/google',
@@ -42,8 +42,12 @@ const routes = [
     }
   },
   {
+    path: '/user-administration',
+    component: () => import('../views/UserAdministration')
+  },
+  {
     path: '/user-administration/add-users-batch',
-    component: () => import('../views/UserAdministration/AddUsersBatch.vue')
+    component: () => import('../views/UserAdministration/AddUsersBatch')
   }
 ];
 

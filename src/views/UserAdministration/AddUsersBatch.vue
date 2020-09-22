@@ -1,7 +1,7 @@
 <template>
   <form name="addUsersBatch" @submit.prevent="submitAddUsersBatch">
     <ul>
-      <li v-for="{ customerId, name } in subAccounts" :key="customerId" class="flex">
+      <li v-for="{ customerId, name } in inactiveSubAccounts" :key="customerId" class="flex">
         <input
           type="checkbox"
           :checked="batchAddForm[customerId] ? batchAddForm[customerId].selected : false"
@@ -52,6 +52,53 @@
         </label>
       </li>
     </ul>
+
+    <div class="border-black border-t border-solid my-6" />
+
+    <ul>
+      <li
+        v-for="{ customerId, name, givenName, familyName, email } in activeSubAccounts"
+        :key="customerId"
+        class="flex"
+      >
+        <label>
+          Organization Name
+          <input
+            :value="name"
+            class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            disabled
+            type="text"
+          />
+        </label>
+        <label>
+          Given Name of Contact
+          <input
+            :value="givenName"
+            class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            disabled
+            type="text"
+          />
+        </label>
+        <label>
+          Family Name of Contact
+          <input
+            :value="familyName"
+            class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            disabled
+            type="text"
+          />
+        </label>
+        <label>
+          Email of Contact
+          <input
+            :value="email"
+            class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            disabled
+            type="email"
+          />
+        </label>
+      </li>
+    </ul>
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       type="submit"
@@ -98,9 +145,19 @@ export default {
     async submitAddUsersBatch() {
       try {
         await UserAdminService.createUsersBatch(this.batchAddForm);
+        this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
       }
+    }
+  },
+
+  computed: {
+    activeSubAccounts() {
+      return this.subAccounts.filter(subAccount => subAccount.active);
+    },
+    inactiveSubAccounts() {
+      return this.subAccounts.filter(subAccount => !subAccount.active);
     }
   }
 };
