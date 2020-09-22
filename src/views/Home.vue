@@ -1,8 +1,9 @@
 <template>
   <div class="flex-1">
     <div class="flex justify-around">
-      <campaign-card company="google" :campaigns="4" @click="linkGoogle" />
-      <campaign-card company="facebook" :campaigns="4" @click="handleFacebook" />
+      <campaign-card company="google" :campaigns="4" to="/google-ads" />
+      <campaign-card company="facebook" :campaigns="4" to="/facebook" />
+      <button @click="linkGoogle">LINK GOOGLE</button>
     </div>
   </div>
 </template>
