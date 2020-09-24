@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import AdServices from '@/services/adServices';
 import { getFacebook } from '@/services/facebook';
 import CampaignCard from '@/components/shared/CampaignCard';
 
@@ -34,7 +35,14 @@ export default {
     },
 
     async linkGoogle() {
-      this.$router.push('/ad-services/oauth/google');
+      try {
+        const {
+          data: { redirectUrl }
+        } = await AdServices.linkGoogleServices();
+        window.location.href = redirectUrl;
+      } catch (error) {
+        console.log({ error });
+      }
     }
   }
 };
