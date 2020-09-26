@@ -7,8 +7,8 @@ const Axios = axios.create({
 });
 
 export default {
-  getGoogleSubAccounts: managerId => {
-    return Axios.post('/ad-services/get-sub-accounts', { managerId });
+  getGoogleSubAccounts: () => {
+    return Axios.get('/ad-services/get-sub-accounts');
   },
 
   linkGoogleServices: () => {

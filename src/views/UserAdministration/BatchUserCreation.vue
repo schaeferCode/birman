@@ -1,5 +1,5 @@
 <template>
-  <form name="addUsersBatch" @submit.prevent="submitAddUsersBatch">
+  <form name="batchUserCreation" @submit.prevent="submitBatchUserCreation">
     <ul>
       <li v-for="{ customerId, name } in inactiveSubAccounts" :key="customerId" class="flex">
         <input
@@ -109,26 +109,19 @@
 </template>
 
 <script>
-import AdServices from '@/services/adServices';
 import UserAdminService from '@/services/userAdministration';
 
 export default {
-  async beforeRouteEnter(to, from, next) {
-    const { managerId } = to.query;
-    try {
-      const { data } = await AdServices.getGoogleSubAccounts(managerId);
-      next(vm => {
-        vm.subAccounts = data.subAccounts.filter(account => !account.canManageClients);
-      });
-    } catch (error) {
-      console.log({ error });
+  props: {
+    subAccounts: {
+      type: Array,
+      default: () => []
     }
   },
 
   data() {
     return {
-      batchAddForm: {},
-      subAccounts: []
+      batchAddForm: {}
     };
   },
 
@@ -142,7 +135,7 @@ export default {
         this.$set(this.batchAddForm, customerId, { name, selected: true });
       }
     },
-    async submitAddUsersBatch() {
+    async submitBatchUserCreation() {
       try {
         await UserAdminService.createUsersBatch(this.batchAddForm);
         this.$router.push('/user-administration');

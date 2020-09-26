@@ -43,11 +43,13 @@ const routes = [
   },
   {
     path: '/user-administration',
-    component: () => import('../views/UserAdministration')
-  },
-  {
-    path: '/user-administration/add-users-batch',
-    component: () => import('../views/UserAdministration/AddUsersBatch')
+    component: () => import('../views/UserAdministration'),
+    children: [
+      {
+        path: 'batch-user-creation',
+        component: () => import('../views/UserAdministration/BatchUserCreation')
+      }
+    ]
   }
 ];
 
