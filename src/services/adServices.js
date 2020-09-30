@@ -7,6 +7,10 @@ const Axios = axios.create({
 });
 
 export default {
+  getGoogleAdMetrics: () => {
+    return Axios.get('/ad-services/get-google-ads-metrics');
+  },
+
   getGoogleSubAccounts: () => {
     return Axios.get('/ad-services/get-sub-accounts');
   },

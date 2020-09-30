@@ -36,12 +36,6 @@ const routes = [
     component: () => import('../views/ForgotPassword')
   },
   {
-    path: '/ad-services/oauth/google',
-    redirect: () => {
-      window.location.href = 'http://localhost:3000/ad-services/oauth/google';
-    }
-  },
-  {
     path: '/user-administration',
     component: () => import('../views/UserAdministration'),
     children: [
@@ -50,6 +44,10 @@ const routes = [
         component: () => import('../views/UserAdministration/BatchUserCreation')
       }
     ]
+  },
+  {
+    path: '/ad-services/google-ads',
+    component: () => import('../views/AdServices/GoogleAds')
   }
 ];
 
