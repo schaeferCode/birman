@@ -109,6 +109,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 import UserAdminService from '@/services/userAdministration';
 
 export default {
@@ -137,7 +139,8 @@ export default {
     },
     async submitBatchUserCreation() {
       try {
-        await UserAdminService.createUsersBatch(this.batchAddForm);
+        const usersToSubmit = _.pickBy(this.batchAddForm, user => user.selected);
+        await UserAdminService.createUsersBatch(usersToSubmit);
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
