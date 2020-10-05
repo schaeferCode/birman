@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <div v-for="report in report" :key="report['Campaign ID']">
+      <p v-if="report['Campaign ID'] !== 'Total'">{{ report['Campaign ID'] }}: Clicks: {{ report['Clicks'] }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -7,16 +11,20 @@ import AdServices from '@/services/adServices';
 
 export default {
   async beforeRouteEnter(to, from, next) {
-    console.log('herere');
     try {
       const { data } = await AdServices.getGoogleAdMetrics();
-      console.log({ data });
       next(vm => {
-        vm.subAccounts = data.subAccounts.filter(account => !account.canManageClients);
+        vm.report = data.report;
       });
     } catch (error) {
       console.log({ error });
     }
+  },
+
+  data() {
+    return {
+      report: () => {}
+    };
   }
 };
 </script>
