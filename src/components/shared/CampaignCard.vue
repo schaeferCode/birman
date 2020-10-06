@@ -1,10 +1,12 @@
 <template>
-  <card class="flex h-64 items-center justify-center relative cursor-pointer" @click="$emit('click')">
-    <img class="h-20" :src="getImgPath" />
-    <div class="absolute left-0 bottom-0 p-4">
-      <span> Campaigns: {{ campaigns }} </span>
-    </div>
-  </card>
+  <router-link :to="to">
+    <card class="flex h-64 items-center justify-center relative cursor-pointer">
+      <img class="h-20" :src="getImgPath" />
+      <div class="absolute left-0 bottom-0 p-4">
+        <span> Campaigns: {{ campaigns }} </span>
+      </div>
+    </card>
+  </router-link>
 </template>
 
 <script>
@@ -23,6 +25,10 @@ export default {
     campaigns: {
       type: Number,
       default: 0
+    },
+    to: {
+      type: String,
+      required: true
     }
   },
 
