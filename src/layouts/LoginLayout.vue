@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Card from "@/components/shared/Card";
+import Card from '@/components/shared/Card';
 
 export default {
   components: {
