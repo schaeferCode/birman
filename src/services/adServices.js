@@ -3,7 +3,7 @@ import Auth from './auth';
 
 // TODO: fix axios instances to be a class; this implementation creates a bug with tokens being stale
 const Axios = axios.create({
-  baseURL: process.env.VUE_BASE_URL || 'http://localhost:3000',
+  baseURL: process.env.VUE_APP_SERVER_URL || 'http://localhost:3000',
   headers: { Authorization: `Bearer ${Auth.getToken()}` }
 });
 
