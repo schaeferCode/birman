@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-axios.defaults.baseURL = 'http://127.0.0.1:3000';
+axios.defaults.baseURL = process.env.VUE_BASE_URL || 'http://localhost:3000';
 
 export const getFacebook = () => {
   axios
