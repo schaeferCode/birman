@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 import JWT from 'jsonwebtoken';
 
-axios.defaults.baseURL = process.env.VUE_BASE_URL || 'http://localhost:3000';
+axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:3000';
 
 const AUTH_LOCAL_STORAGE = 'BIRMAN:AUTH:TOKEN';
 
@@ -9,7 +9,7 @@ export default {
   verifyAndDecodeToken: function() {
     try {
       const token = this.getToken();
-      const decodedToken = JWT.verify(token, process.env.VUE_APP_JWT_SECRET);
+      const decodedToken = JWT.decode(token);
       return decodedToken;
     } catch (error) {
       return false;

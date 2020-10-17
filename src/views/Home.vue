@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       googleParams: {
-        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
         scope: ['https://www.googleapis.com/auth/adwords', 'https://www.googleapis.com/auth/userinfo.email']
       }
     };
