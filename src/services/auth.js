@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 import JWT from 'jsonwebtoken';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = process.env.VUE_BASE_URL || 'http://localhost:3000';
 
 const AUTH_LOCAL_STORAGE = 'BIRMAN:AUTH:TOKEN';
 
