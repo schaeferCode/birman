@@ -12,7 +12,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home, // load sync home
-    default: true
+    default: true,
+    beforeEnter: (to, from, next) => {
+      if (sessionStorage.getItem('redirect') !== null) {
+        const redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        next(redirect);
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/login',
@@ -53,7 +62,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.VUE_BASE_URL,
+  base: process.env.NODE_ENV === 'production' ? '/birman/' : '/',
   routes
 });
 
