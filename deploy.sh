@@ -8,6 +8,7 @@ npm run build
 
 # navigate into the build output directory
 cd dist
+mv index.html 404.html
 
 git init
 git add -A
