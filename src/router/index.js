@@ -12,16 +12,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home, // load sync home
-    default: true,
-    beforeEnter: (to, from, next) => {
-      if (sessionStorage.getItem('redirect') !== null) {
-        const redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        next(redirect);
-      } else {
-        next();
-      }
-    }
+    default: true
   },
   {
     path: '/login',
