@@ -16,11 +16,10 @@ export default {
     }
   },
 
-  login: ({ email, password, tenant }) => {
+  login: ({ email, password }) => {
     return axios.post('/auth/login', {
       email,
-      password,
-      tenant
+      password
     });
   },
 

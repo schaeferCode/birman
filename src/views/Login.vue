@@ -47,11 +47,9 @@ export default {
 
   methods: {
     async handleLogin() {
-      const { tenant } = this.$route.query;
       await this.$store.dispatch('Auth/login', {
         email: this.email,
-        password: this.password,
-        tenant
+        password: this.password
       });
       this.$router.push('/').catch(err => {
         console.log({ err });
