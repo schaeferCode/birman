@@ -31,9 +31,9 @@ export default {
   },
 
   actions: {
-    async login({ commit }, { email, password, tenant }) {
+    async login({ commit }, { email, password }) {
       try {
-        const response = await Auth.login({ email, password, tenant });
+        const response = await Auth.login({ email, password });
         // set token to localStorage
         Auth.setToken(response.data.token);
         // decode token data and set to store
@@ -43,8 +43,7 @@ export default {
           givenName: decodedToken.givenName,
           familyName: decodedToken.familyName,
           linkedAdServices: decodedToken.linkedAdServices,
-          role: decodedToken.role,
-          tenant: tenant
+          role: decodedToken.role
         };
         commit('setUser', userData);
       } catch (error) {
