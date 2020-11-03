@@ -134,7 +134,7 @@ export default {
       } else if (this.batchAddForm[customerId] && !this.batchAddForm[customerId].selected) {
         this.$set(this.batchAddForm[customerId], 'selected', true);
       } else {
-        this.$set(this.batchAddForm, customerId, { name, selected: true });
+        this.$set(this.batchAddForm, customerId, { clientName: name, selected: true });
       }
     },
     async submitBatchUserCreation() {
