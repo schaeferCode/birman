@@ -38,7 +38,6 @@ export default {
         Auth.setToken(response.data.token);
         // decode token data and set to store
         const decodedToken = Auth.verifyAndDecodeToken();
-        console.log({ decodedToken });
         const userData = {
           email: decodedToken.email,
           givenName: decodedToken.givenName,
