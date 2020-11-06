@@ -11,7 +11,6 @@ export default class Service {
     });
     service.interceptors.response.use(this._handleSuccess, this._handleError);
     this.service = service;
-    this.token = null;
   }
 
   get token() {

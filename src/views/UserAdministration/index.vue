@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import AdServices from '@/services/adServices';
+import AdService from '@/services/AdService';
 
 export default {
   async mounted() {
     try {
-      const { data } = await AdServices.getGoogleSubAccounts();
+      const { data } = await AdService.getGoogleSubAccounts();
       this.subAccounts = data.subAccounts;
     } catch (error) {
       console.log({ error });

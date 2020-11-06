@@ -111,7 +111,7 @@
 <script>
 import _ from 'lodash';
 
-import UserAdminService from '@/services/userAdministration';
+import UserService from '@/services/UserService';
 
 export default {
   props: {
@@ -140,7 +140,7 @@ export default {
     async submitBatchUserCreation() {
       try {
         const usersToSubmit = _.pickBy(this.batchAddForm, user => user.selected);
-        await UserAdminService.createUsersBatch(usersToSubmit);
+        await UserService.createUsersBatch(usersToSubmit);
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
