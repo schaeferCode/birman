@@ -1,9 +1,9 @@
 const axios = require('axios').default;
-import Auth from './auth';
+import AuthService from './AuthService';
 
 const Axios = axios.create({
   baseURL: process.env.VUE_APP_SERVER_URL || 'http://localhost:3000',
-  headers: { Authorization: `Bearer ${Auth.getToken()}` }
+  headers: { Authorization: `Bearer ${AuthService.token}` }
 });
 
 export default {
