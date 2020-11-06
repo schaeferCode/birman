@@ -7,7 +7,7 @@ export default class Service {
   constructor() {
     let service = axios.create({
       baseURL: process.env.VUE_APP_SERVER_URL || 'http://localhost:3000',
-      headers: { Authorization: `Bearer ${this.getToken()}` }
+      headers: { Authorization: `Bearer ${this.token}` }
     });
     service.interceptors.response.use(this._handleSuccess, this._handleError);
     this.service = service;
