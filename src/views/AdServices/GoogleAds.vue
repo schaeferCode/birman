@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import AdServices from '@/services/adServices';
+import AdService from '@/services/AdService';
 
 export default {
   async beforeRouteEnter(to, from, next) {
     try {
-      const { data } = await AdServices.getGoogleAdMetrics();
+      const { data } = await AdService.getGoogleAdMetrics();
       next(vm => {
         vm.report = data.report;
       });

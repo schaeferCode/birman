@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AdServices from '@/services/adServices';
+import AdService from '@/services/AdService';
 import { getFacebook } from '@/services/facebook';
 import CampaignCard from '@/components/shared/CampaignCard';
 
@@ -38,7 +38,7 @@ export default {
       try {
         const {
           data: { redirectUrl }
-        } = await AdServices.linkGoogleServices();
+        } = await AdService.linkGoogleServices();
         window.location.href = redirectUrl;
       } catch (error) {
         console.log({ error });

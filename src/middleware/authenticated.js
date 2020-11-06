@@ -1,7 +1,7 @@
-import Auth from '@/services/auth';
+import AuthService from '@/services/AuthService';
 
 export default (to, from, next) => {
-  const isAuthenticated = Auth.verifyAndDecodeToken();
+  const isAuthenticated = AuthService.verifyAndDecodeToken();
   const isPublicRoute = to.meta.publicRoute;
 
   if (isAuthenticated || isPublicRoute) next();

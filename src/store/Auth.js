@@ -1,4 +1,4 @@
-import Auth from '@/services/auth';
+import AuthService from '@/services/AuthService';
 
 export default {
   namespaced: true,
@@ -33,11 +33,11 @@ export default {
   actions: {
     async login({ commit }, { email, password }) {
       try {
-        const response = await Auth.login({ email, password });
+        const response = await AuthService.login({ email, password });
         // set token to localStorage
-        Auth.setToken(response.data.token);
+        AuthService.token = response.data.token;
         // decode token data and set to store
-        const decodedToken = Auth.verifyAndDecodeToken();
+        const decodedToken = AuthService.verifyAndDecodeToken();
         const userData = {
           email: decodedToken.email,
           givenName: decodedToken.givenName,
