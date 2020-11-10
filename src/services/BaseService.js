@@ -44,6 +44,11 @@ export default class Service {
     document.location = path;
   };
 
+  deleteToken() {
+    localStorage.removeItem(AUTH_LOCAL_STORAGE);
+    delete this.token;
+  }
+
   async get(path) {
     return await this.service.get(path);
   }
