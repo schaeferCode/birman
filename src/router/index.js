@@ -12,28 +12,28 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home, // load sync home
-    default: true
+    default: true,
   },
   {
     path: '/login',
     name: 'Login',
     meta: {
       layout: 'login-layout',
-      publicRoute: true
+      publicRoute: true,
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Login')
+    component: () => import('../views/Login'),
   },
   {
     path: '/login/forgot-password',
     name: 'ForgotPassword',
     meta: {
       layout: 'login-layout',
-      publicRoute: true
+      publicRoute: true,
     },
-    component: () => import('../views/ForgotPassword')
+    component: () => import('../views/ForgotPassword'),
   },
   {
     path: '/user-administration',
@@ -41,20 +41,24 @@ const routes = [
     children: [
       {
         path: 'batch-user-creation',
-        component: () => import('../views/UserAdministration/BatchUserCreation')
-      }
-    ]
+        component: () => import('../views/UserAdministration/BatchUserCreation'),
+      },
+      {
+        path: 'add-user',
+        component: () => import('../views/UserAdministration/AddUser'),
+      },
+    ],
   },
   {
     path: '/ad-services/google-ads',
-    component: () => import('../views/AdServices/GoogleAds')
-  }
+    component: () => import('../views/AdServices/GoogleAds'),
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.NODE_ENV === 'production' ? '/birman/' : '/',
-  routes
+  routes,
 });
 
 router.beforeEach(authenticated);
