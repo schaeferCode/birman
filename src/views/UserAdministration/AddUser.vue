@@ -11,15 +11,28 @@
         <input v-model="role" name="role" type="radio" value="client-admin" />
       </label>
     </div>
-    <label v-if="role === 'client-admin'">
-      Client Name
-      <input
-        v-model="clientName"
-        class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-        type="text"
-      />
-    </label>
+    <template v-if="role === 'client-admin'">
+      <label>
+        Select Client Name
+        <select
+          v-model="clientName"
+          class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          name="clientName"
+          required
+        >
+          <option v-for="(client, index) in allClients" :key="index" :label="index" :value="index" />
+        </select>
+      </label>
+      <!-- <label>
+        Activate Ad Services
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          @click="$router.push('/user-administration/batch-user-creation')"
+        >
+          Add Multiple Google Ad Users
+        </button>
+      </label> -->
+    </template>
     <label>
       First Name
       <input
@@ -57,11 +70,13 @@
 </template>
 
 <script>
+import AdService from '@/services/AdService';
 import UserService from '@/services/UserService';
 
 export default {
   data() {
     return {
+      allClients: () => [],
       givenName: '',
       familyName: '',
       role: 'tenant-admin',
@@ -77,6 +92,18 @@ export default {
       } catch (error) {
         debugger;
         console.log({ error });
+      }
+    },
+  },
+
+  watch: {
+    async role(newValue) {
+      if (newValue === 'client-admin') {
+        try {
+          this.allClients = await AdService.getAllClients();
+        } catch (error) {
+          console.log({ error });
+        }
       }
     },
   },
