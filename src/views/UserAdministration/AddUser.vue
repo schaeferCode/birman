@@ -15,23 +15,19 @@
       <label>
         Select Client Name
         <select
-          v-model="clientName"
           class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           name="clientName"
           required
+          @change="handleClientNameChange"
         >
-          <option v-for="(client, index) in allClients" :key="index" :label="index" :value="index" />
+          <option
+            v-for="{ name, customerId } in allClients"
+            :key="name"
+            :label="name"
+            :value="JSON.stringify({ clientName: name, serviceUserId: customerId })"
+          />
         </select>
       </label>
-      <!-- <label>
-        Activate Ad Services
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          @click="$router.push('/user-administration/batch-user-creation')"
-        >
-          Add Multiple Google Ad Users
-        </button>
-      </label> -->
     </template>
     <label>
       First Name
@@ -77,9 +73,12 @@ export default {
   data() {
     return {
       allClients: () => [],
-      givenName: '',
+      clientName: '',
+      email: '',
       familyName: '',
+      givenName: '',
       role: 'tenant-admin',
+      serviceUserId: '',
     };
   },
 
@@ -90,9 +89,14 @@ export default {
         await UserService.createUser({ givenName, familyName, email, role });
         this.$router.push('/user-administration');
       } catch (error) {
-        debugger;
         console.log({ error });
       }
+    },
+
+    handleClientNameChange(event) {
+      const { clientName, serviceUserId } = JSON.parse(event.target.value);
+      this.clientName = clientName;
+      this.serviceUserId = serviceUserId;
     },
   },
 
@@ -100,7 +104,8 @@ export default {
     async role(newValue) {
       if (newValue === 'client-admin') {
         try {
-          this.allClients = await AdService.getAllClients();
+          const { data } = await AdService.getAllClients();
+          this.allClients = data;
         } catch (error) {
           console.log({ error });
         }
