@@ -21,7 +21,8 @@
           @change="handleClientNameChange"
         >
           <option
-            v-for="{ name, customerId } in allClients"
+            v-for="{ active, customerId, name } in allClients"
+            :disabled="active"
             :key="name"
             :label="name"
             :value="JSON.stringify({ clientName: name, serviceUserId: customerId })"
