@@ -7,7 +7,7 @@ export default class Service {
   constructor() {
     let service = axios.create({
       baseURL: process.env.VUE_APP_SERVER_URL || 'http://localhost:3000',
-      headers: { Authorization: `Bearer ${this.token}` }
+      headers: { Authorization: `Bearer ${this.token}` },
     });
     service.interceptors.response.use(this._handleSuccess, this._handleError);
     this.service = service;
@@ -25,7 +25,7 @@ export default class Service {
     return response;
   }
 
-  _handleError = error => {
+  _handleError = (error) => {
     switch (error.response.status) {
       case 401:
         this._redirectTo(document, '/');
@@ -58,7 +58,7 @@ export default class Service {
       method: 'PATCH',
       url: path,
       responseType: 'json',
-      data: payload
+      data: payload,
     });
   }
 
@@ -67,15 +67,15 @@ export default class Service {
       method: 'POST',
       url: path,
       responseType: 'json',
-      data: payload
+      data: payload,
     });
   }
 
   verifyAndDecodeToken() {
-    try {
-      return JWT.decode(this.token);
-    } catch (error) {
-      return error;
+    const decodedToken = JWT.decode(this.token);
+    if (Date.now() >= decodedToken.exp * 1000) {
+      return false;
     }
+    return decodedToken;
   }
 }
