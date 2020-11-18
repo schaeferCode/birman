@@ -20,6 +20,7 @@
           required
           @change="handleClientNameChange"
         >
+          <option />
           <option
             v-for="{ active, customerId, name } in allClients"
             :disabled="active"
@@ -86,8 +87,8 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        const { email, givenName, familyName, role } = this;
-        await UserService.createUser({ givenName, familyName, email, role });
+        const { clientName, email, givenName, familyName, role, serviceUserId } = this;
+        await UserService.createUser({ clientName, email, givenName, familyName, role, serviceUserId });
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
