@@ -10,24 +10,24 @@ export default {
       familyName: '',
       linkedAdServices: [],
       role: '',
-      tenant: ''
-    }
+      tenant: '',
+    },
   }),
 
   getters: {
-    isAdmin: state => {
+    isAdmin: (state) => {
       return state.user.role.includes(['admin', 'root']);
     },
 
-    tenant: state => {
+    tenant: (state) => {
       return state.user.tenant;
-    }
+    },
   },
 
   mutations: {
     setUser(state, userData) {
       state.user = userData;
-    }
+    },
   },
 
   actions: {
@@ -43,13 +43,13 @@ export default {
           givenName: decodedToken.givenName,
           familyName: decodedToken.familyName,
           linkedAdServices: decodedToken.linkedAdServices,
-          role: decodedToken.role
+          role: decodedToken.role,
         };
         commit('setUser', userData);
       } catch (error) {
         // TODO: handle error in store properly
         console.log({ error });
       }
-    }
-  }
+    },
+  },
 };
