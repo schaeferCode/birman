@@ -11,6 +11,8 @@
         <input v-model="role" name="role" type="radio" value="client-admin" />
       </label>
     </div>
+
+    <!-- client-admin creation -->
     <template v-if="role === 'client-admin'">
       <label>
         Select Client Name
@@ -31,6 +33,7 @@
         </select>
       </label>
     </template>
+
     <label>
       First Name
       <input
@@ -85,13 +88,11 @@ export default {
   },
 
   methods: {
-    async handleSubmit() {
-      try {
-        const { clientName, email, givenName, familyName, role, serviceUserId } = this;
-        await UserService.createUser({ clientName, email, givenName, familyName, role, serviceUserId });
-        this.$router.push('/user-administration');
-      } catch (error) {
-        console.log({ error });
+    handleSubmit() {
+      switch (this.role) {
+        case 'client-admin':
+          this.submitClientAdminUser();
+          break;
       }
     },
 
@@ -99,6 +100,16 @@ export default {
       const { clientName, serviceUserId } = JSON.parse(event.target.value);
       this.clientName = clientName;
       this.serviceUserId = serviceUserId;
+    },
+
+    async submitClientAdminUser() {
+      try {
+        const { clientName, email, givenName, familyName, role, serviceUserId } = this;
+        await UserService.createClientAdminUser({ clientName, email, givenName, familyName, role, serviceUserId });
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
+      }
     },
   },
 
