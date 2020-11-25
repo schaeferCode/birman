@@ -21,6 +21,13 @@ export default class Service {
     localStorage.setItem(AUTH_LOCAL_STORAGE, JSON.stringify(token));
   }
 
+  get user() {
+    const decodedToken = this.verifyAndDecodeToken();
+    if (!decodedToken) return false;
+    const { email, givenName, familyName, linkedAdServices, role } = decodedToken;
+    return { email, givenName, familyName, linkedAdServices, role };
+  }
+
   _handleSuccess(response) {
     return response;
   }
@@ -73,6 +80,7 @@ export default class Service {
 
   verifyAndDecodeToken() {
     const decodedToken = JWT.decode(this.token);
+    if (!decodedToken) return false;
     if (Date.now() >= decodedToken.exp * 1000) {
       return false;
     }
