@@ -25,9 +25,8 @@
           <option />
           <option
             v-for="{ active, customerId, name } in allClients"
-            :disabled="active"
             :key="name"
-            :label="name"
+            :label="`${name} ${active ? '(is active)' : ''}`"
             :value="JSON.stringify({ clientName: name, serviceUserId: customerId })"
           />
         </select>
