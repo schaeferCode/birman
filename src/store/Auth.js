@@ -10,46 +10,38 @@ export default {
       familyName: '',
       linkedAdServices: [],
       role: '',
-      tenant: ''
-    }
+      tenant: '',
+    },
   }),
 
   getters: {
-    isAdmin: state => {
-      return state.user.role.includes(['admin', 'root']);
+    role: (state) => {
+      return state.user.role;
     },
 
-    tenant: state => {
+    tenant: (state) => {
       return state.user.tenant;
-    }
+    },
   },
 
   mutations: {
     setUser(state, userData) {
       state.user = userData;
-    }
+    },
   },
 
   actions: {
     async login({ commit }, { email, password }) {
       try {
         const response = await AuthService.login({ email, password });
-        // set token to localStorage
+        // set token
         AuthService.token = response.data.token;
-        // decode token data and set to store
-        const decodedToken = AuthService.verifyAndDecodeToken();
-        const userData = {
-          email: decodedToken.email,
-          givenName: decodedToken.givenName,
-          familyName: decodedToken.familyName,
-          linkedAdServices: decodedToken.linkedAdServices,
-          role: decodedToken.role
-        };
-        commit('setUser', userData);
+        // set user data to store
+        commit('setUser', AuthService.user);
       } catch (error) {
         // TODO: handle error in store properly
         console.log({ error });
       }
-    }
-  }
+    },
+  },
 };
