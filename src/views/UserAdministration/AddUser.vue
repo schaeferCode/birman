@@ -92,6 +92,9 @@ export default {
         case 'client-admin':
           this.submitClientAdminUser();
           break;
+        case 'tenant-admin':
+          this.submitTenantAdminUser();
+          break;
       }
     },
 
@@ -105,6 +108,16 @@ export default {
       try {
         const { clientName, email, givenName, familyName, role, serviceUserId } = this;
         await UserService.createClientAdminUser({ clientName, email, givenName, familyName, role, serviceUserId });
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
+      }
+    },
+
+    async submitTenantAdminUser() {
+      try {
+        const { email, givenName, familyName, role } = this;
+        await UserService.createTenantAdminUser({ email, givenName, familyName, role });
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
