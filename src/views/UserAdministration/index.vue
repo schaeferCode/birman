@@ -13,27 +13,45 @@
     >
       Add User
     </button>
-    <router-view :sub-accounts="subAccounts" />
+    <router-view :client-list="clientList" :sub-accounts="subAccounts" :userRole="userRole" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import AdService from '@/services/AdService';
 
 export default {
   async mounted() {
-    try {
-      const { data } = await AdService.getGoogleSubAccounts();
-      this.subAccounts = data.subAccounts;
-    } catch (error) {
-      console.log({ error });
+    if (this.userRole === 'tenant-admin') {
+      try {
+        const { data } = await AdService.getGoogleSubAccounts();
+        this.subAccounts = data.subAccounts;
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+
+    if (this.userRole === 'tenant-admin') {
+      try {
+        const { data } = await AdService.getAllClients();
+        this.clientList = data;
+      } catch (error) {
+        console.log({ error });
+      }
     }
   },
 
   data() {
     return {
+      clientList: [],
       subAccounts: [],
     };
+  },
+
+  computed: {
+    ...mapGetters('Auth', { userRole: 'role' }),
   },
 };
 </script>

@@ -2,18 +2,22 @@
   <form class="flex flex-col" @submit.prevent="handleSubmit">
     <div class="flex justify-around">
       <p>Role:</p>
-      <label>
+      <label v-if="userRole === 'tenant-admin'">
         Agency Admin
         <input v-model="role" name="role" type="radio" value="tenant-admin" required />
       </label>
-      <label>
+      <label v-if="isTenantOrClientAdmin">
         Client Admin
         <input v-model="role" name="role" type="radio" value="client-admin" />
+      </label>
+      <label v-if="userRole === 'client-admin'">
+        User
+        <input v-model="role" name="role" type="radio" value="user" />
       </label>
     </div>
 
     <!-- client-admin creation -->
-    <template v-if="role === 'client-admin'">
+    <template v-if="isTenantOrClientAdmin">
       <label>
         Select Client Name
         <select
@@ -24,7 +28,7 @@
         >
           <option />
           <option
-            v-for="{ active, customerId, name } in allClients"
+            v-for="{ active, customerId, name } in clientList"
             :key="name"
             :label="`${name} ${active ? '(is active)' : ''}`"
             :value="JSON.stringify({ clientName: name, serviceUserId: customerId })"
@@ -70,13 +74,22 @@
 </template>
 
 <script>
-import AdService from '@/services/AdService';
 import UserService from '@/services/UserService';
 
 export default {
+  props: {
+    clientList: {
+      type: Array,
+      required: true,
+    },
+    userRole: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      allClients: () => [],
       clientName: '',
       email: '',
       familyName: '',
@@ -84,6 +97,12 @@ export default {
       role: 'tenant-admin',
       serviceUserId: '',
     };
+  },
+
+  computed: {
+    isTenantOrClientAdmin() {
+      return ['tenant-admin', 'client-admin'].includes(this.userRole);
+    },
   },
 
   methods: {
@@ -121,19 +140,6 @@ export default {
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
-      }
-    },
-  },
-
-  watch: {
-    async role(newValue) {
-      if (newValue === 'client-admin') {
-        try {
-          const { data } = await AdService.getAllClients();
-          this.allClients = data;
-        } catch (error) {
-          console.log({ error });
-        }
       }
     },
   },
