@@ -17,7 +17,7 @@
     </div>
 
     <!-- client-admin creation -->
-    <template v-if="isTenantOrClientAdmin">
+    <template v-if="userRole === 'tenant-admin'">
       <label>
         Select Client Name
         <select
@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import pickBy from 'lodash/pickBy';
+
 import UserService from '@/services/UserService';
 
 export default {
@@ -94,7 +96,7 @@ export default {
       email: '',
       familyName: '',
       givenName: '',
-      role: 'tenant-admin',
+      role: '',
       serviceUserId: '',
     };
   },
@@ -114,6 +116,9 @@ export default {
         case 'tenant-admin':
           this.submitTenantAdminUser();
           break;
+        case 'user':
+          this.submitClientUser();
+          break;
       }
     },
 
@@ -125,8 +130,21 @@ export default {
 
     async submitClientAdminUser() {
       try {
-        const { clientName, email, givenName, familyName, role, serviceUserId } = this;
-        await UserService.createClientAdminUser({ clientName, email, givenName, familyName, role, serviceUserId });
+        const { clientName, email, givenName, familyName, role, serviceUserId, userRole } = this;
+        await UserService.createClientAdminUser(
+          pickBy({ clientName, email, givenName, familyName, role, serviceUserId }, (value) => !!value === true),
+          userRole
+        );
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
+      }
+    },
+
+    async submitClientUser() {
+      try {
+        const { email, givenName, familyName, role, userRole } = this;
+        await UserService.createClientUser({ email, givenName, familyName, role }, userRole);
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });
