@@ -17,7 +17,7 @@
     </div>
 
     <!-- client-admin creation -->
-    <template v-if="userRole === 'tenant-admin'">
+    <template v-if="userRole === 'tenant-admin' && role === 'client-admin'">
       <label>
         Select Client Name
         <select
@@ -153,8 +153,8 @@ export default {
 
     async submitTenantAdminUser() {
       try {
-        const { email, givenName, familyName, role } = this;
-        await UserService.createTenantAdminUser({ email, givenName, familyName, role });
+        const { email, givenName, familyName, role, userRole } = this;
+        await UserService.createTenantAdminUser({ email, givenName, familyName, role }, userRole);
         this.$router.push('/user-administration');
       } catch (error) {
         console.log({ error });

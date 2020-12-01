@@ -13,8 +13,8 @@ class UserService extends BaseService {
     return this.post(`/users/${userRole}/create-client-user`, userInfo);
   }
 
-  createTenantAdminUser(userInfo) {
-    return this.post('/users/create-tenant-admin', userInfo);
+  createTenantAdminUser(userInfo, userRole) {
+    return this.post(`/users/${userRole}/create-tenant-admin`, userInfo);
   }
 }
 
