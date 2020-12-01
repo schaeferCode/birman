@@ -5,8 +5,16 @@ class UserService extends BaseService {
     return this.post('/users/batch-user-creation', { users });
   }
 
-  createUser(userInfo) {
-    return this.post('/users/create', userInfo);
+  createClientAdminUser(userInfo, userRole) {
+    return this.post(`/users/${userRole}/create-client-admin`, userInfo);
+  }
+
+  createClientUser(userInfo, userRole) {
+    return this.post(`/users/${userRole}/create-client-user`, userInfo);
+  }
+
+  createTenantAdminUser(userInfo, userRole) {
+    return this.post(`/users/${userRole}/create-tenant-admin`, userInfo);
   }
 }
 

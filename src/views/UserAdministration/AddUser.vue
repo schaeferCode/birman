@@ -2,16 +2,22 @@
   <form class="flex flex-col" @submit.prevent="handleSubmit">
     <div class="flex justify-around">
       <p>Role:</p>
-      <label>
+      <label v-if="userRole === 'tenant-admin'">
         Agency Admin
         <input v-model="role" name="role" type="radio" value="tenant-admin" required />
       </label>
-      <label>
+      <label v-if="isTenantOrClientAdmin">
         Client Admin
         <input v-model="role" name="role" type="radio" value="client-admin" />
       </label>
+      <label v-if="userRole === 'client-admin'">
+        User
+        <input v-model="role" name="role" type="radio" value="user" />
+      </label>
     </div>
-    <template v-if="role === 'client-admin'">
+
+    <!-- client-admin creation -->
+    <template v-if="userRole === 'tenant-admin' && role === 'client-admin'">
       <label>
         Select Client Name
         <select
@@ -22,15 +28,15 @@
         >
           <option />
           <option
-            v-for="{ active, customerId, name } in allClients"
-            :disabled="active"
+            v-for="{ active, customerId, name } in clientList"
             :key="name"
-            :label="name"
+            :label="`${name} ${active ? '(is active)' : ''}`"
             :value="JSON.stringify({ clientName: name, serviceUserId: customerId })"
           />
         </select>
       </label>
     </template>
+
     <label>
       First Name
       <input
@@ -68,30 +74,51 @@
 </template>
 
 <script>
-import AdService from '@/services/AdService';
+import pickBy from 'lodash/pickBy';
+
 import UserService from '@/services/UserService';
 
 export default {
+  props: {
+    clientList: {
+      type: Array,
+      required: true,
+    },
+    userRole: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      allClients: () => [],
       clientName: '',
       email: '',
       familyName: '',
       givenName: '',
-      role: 'tenant-admin',
+      role: '',
       serviceUserId: '',
     };
   },
 
+  computed: {
+    isTenantOrClientAdmin() {
+      return ['tenant-admin', 'client-admin'].includes(this.userRole);
+    },
+  },
+
   methods: {
-    async handleSubmit() {
-      try {
-        const { clientName, email, givenName, familyName, role, serviceUserId } = this;
-        await UserService.createUser({ clientName, email, givenName, familyName, role, serviceUserId });
-        this.$router.push('/user-administration');
-      } catch (error) {
-        console.log({ error });
+    handleSubmit() {
+      switch (this.role) {
+        case 'client-admin':
+          this.submitClientAdminUser();
+          break;
+        case 'tenant-admin':
+          this.submitTenantAdminUser();
+          break;
+        case 'user':
+          this.submitClientUser();
+          break;
       }
     },
 
@@ -100,17 +127,37 @@ export default {
       this.clientName = clientName;
       this.serviceUserId = serviceUserId;
     },
-  },
 
-  watch: {
-    async role(newValue) {
-      if (newValue === 'client-admin') {
-        try {
-          const { data } = await AdService.getAllClients();
-          this.allClients = data;
-        } catch (error) {
-          console.log({ error });
-        }
+    async submitClientAdminUser() {
+      try {
+        const { clientName, email, givenName, familyName, role, serviceUserId, userRole } = this;
+        await UserService.createClientAdminUser(
+          pickBy({ clientName, email, givenName, familyName, role, serviceUserId }, (value) => !!value === true),
+          userRole
+        );
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
+      }
+    },
+
+    async submitClientUser() {
+      try {
+        const { email, givenName, familyName, role, userRole } = this;
+        await UserService.createClientUser({ email, givenName, familyName, role }, userRole);
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
+      }
+    },
+
+    async submitTenantAdminUser() {
+      try {
+        const { email, givenName, familyName, role, userRole } = this;
+        await UserService.createTenantAdminUser({ email, givenName, familyName, role }, userRole);
+        this.$router.push('/user-administration');
+      } catch (error) {
+        console.log({ error });
       }
     },
   },
