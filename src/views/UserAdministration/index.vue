@@ -13,7 +13,13 @@
     >
       Add User
     </button>
-    <router-view :client-list="clientList" :sub-accounts="subAccounts" :userRole="userRole" />
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      @click="$router.push('/user-administration/edit-user')"
+    >
+      Edit User
+    </button>
+    <router-view :client-list="clientList" :sub-accounts="subAccounts" :userRole="userRole" :users="users" />
   </div>
 </template>
 
@@ -21,6 +27,7 @@
 import { mapGetters } from 'vuex';
 
 import AdService from '@/services/AdService';
+import UserService from '@/services/UserService';
 
 export default {
   async mounted() {
@@ -41,12 +48,23 @@ export default {
         console.log({ error });
       }
     }
+
+    if (this.userRole === 'client-admin') {
+      try {
+        const { data } = await UserService.getAllUsers(this.userRole);
+        this.users = data;
+        console.log('users', this.users);
+      } catch (error) {
+        console.log({ error });
+      }
+    }
   },
 
   data() {
     return {
       clientList: [],
       subAccounts: [],
+      users: [],
     };
   },
 

@@ -16,6 +16,10 @@ class UserService extends BaseService {
   createTenantAdminUser(userInfo, userRole) {
     return this.post(`/users/${userRole}/create-tenant-admin`, userInfo);
   }
+
+  getAllUsers(userRole) {
+    return this.get(`/users/${userRole}`);
+  }
 }
 
 export default new UserService();

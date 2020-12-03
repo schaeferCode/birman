@@ -47,6 +47,10 @@ const routes = [
         path: 'add-user',
         component: () => import('../views/UserAdministration/AddUser'),
       },
+      {
+        path: 'edit-user',
+        component: () => import('../views/UserAdministration/EditUser'),
+      },
     ],
   },
   {
