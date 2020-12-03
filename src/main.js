@@ -1,3 +1,4 @@
+import PortalVue from 'portal-vue';
 import Vue from 'vue';
 
 import router from './router';
@@ -12,10 +13,12 @@ import LoginLayout from './layouts/LoginLayout';
 Vue.component('default-layout', DefaultLayout);
 Vue.component('login-layout', LoginLayout);
 
+Vue.use(PortalVue);
+
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app');

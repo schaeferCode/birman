@@ -11,11 +11,18 @@
         {{ user.email }}
       </span>
     </li>
+    <modal v-if="selectedUser"> stuff </modal>
   </ul>
 </template>
 
 <script>
+import Modal from '@/components/shared/Modal';
+
 export default {
+  components: {
+    Modal,
+  },
+
   props: {
     users: {
       type: Array,
