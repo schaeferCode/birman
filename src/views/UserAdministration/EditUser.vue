@@ -92,7 +92,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await UserService.editClientUser(this.form, this.userRole);
+        await UserService.editUser(this.form, this.userRole);
       } catch (error) {
         console.log({ error });
       }
