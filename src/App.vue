@@ -3,6 +3,7 @@
     <component :is="layout">
       <router-view />
     </component>
+    <portal-target name="modal" />
   </div>
 </template>
 
