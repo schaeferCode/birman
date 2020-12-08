@@ -31,32 +31,29 @@ import UserService from '@/services/UserService';
 
 export default {
   async mounted() {
-    if (this.userRole === 'tenant-admin') {
-      try {
-        const { data } = await AdService.getGoogleSubAccounts();
-        this.subAccounts = data.subAccounts;
-      } catch (error) {
-        console.log({ error });
-      }
-    }
-
-    if (this.userRole === 'tenant-admin') {
-      try {
-        const { data } = await AdService.getAllClients();
-        this.clientList = data;
-      } catch (error) {
-        console.log({ error });
-      }
-    }
-
-    if (this.userRole === 'client-admin') {
-      try {
-        const { data } = await UserService.getAllUsers(this.userRole);
-        this.users = data;
-        console.log('users', this.users);
-      } catch (error) {
-        console.log({ error });
-      }
+    switch (this.userRole) {
+      case 'tenant-admin':
+        try {
+          const [subAccounts, clients, users] = await Promise.all([
+            AdService.getGoogleSubAccounts(),
+            AdService.getAllClients(),
+            UserService.getAllUsers(this.userRole),
+          ]);
+          this.clientList = clients.data;
+          this.subAccounts = subAccounts.data;
+          this.users = users.data;
+        } catch (error) {
+          console.log({ error });
+        }
+        break;
+      case 'client-admin':
+        try {
+          const { data } = await UserService.getAllUsers(this.userRole);
+          this.users = data;
+        } catch (error) {
+          console.log({ error });
+        }
+        break;
     }
   },
 
