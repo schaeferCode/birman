@@ -51,9 +51,17 @@
         </button>
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="reset"
           @click="selectedUser = null"
         >
           Cancel
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          @click="handleDelete"
+        >
+          Delete
         </button>
       </form>
     </modal>
@@ -93,6 +101,14 @@ export default {
     async handleSubmit() {
       try {
         await UserService.editUser(this.form, this.userRole);
+      } catch (error) {
+        console.log({ error });
+      }
+    },
+
+    async handleDelete() {
+      try {
+        await UserService.deleteUser(this.selectedUser._id, this.userRole);
       } catch (error) {
         console.log({ error });
       }
