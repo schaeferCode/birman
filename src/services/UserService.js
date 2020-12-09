@@ -17,6 +17,10 @@ class UserService extends BaseService {
     return this.post(`/users/${userRole}/create-tenant-admin`, userInfo);
   }
 
+  deleteUser(userId, userRole) {
+    return this.delete(`/users/${userRole}`, { _id: userId });
+  }
+
   editUser(userInfo, userRole) {
     return this.patch(`/users/${userRole}/edit-user`, userInfo);
   }

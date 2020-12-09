@@ -56,6 +56,14 @@ export default class Service {
     delete this.token;
   }
 
+  async delete(path, payload) {
+    return await this.service.request({
+      method: 'DELETE',
+      url: path,
+      data: payload,
+    });
+  }
+
   async get(path) {
     return await this.service.get(path);
   }
